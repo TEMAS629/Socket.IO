@@ -1,118 +1,66 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
-    <title>Socket.IO chat</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-    <script src="/main.js" charset="utf-8"></script>
-    <script src="/chat.js" charset="utf-8"></script>
-    <style>
-        body {
-            margin: 0 auto;
-            padding-bottom: 3rem;
-            font-family: Helvetica, Arial, sans-serif;
-        }
-
-        #form {
-            background: rgba(242, 242, 242, 0.15);
-            padding: 0.25rem;
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            display: flex;
-            height: 3rem;
-            box-sizing: border-box;
-            backdrop-filter: blur(10px);
-        }
-
-        #input {
-            border: none;
-            padding: 0 1rem;
-            flex-grow: 1;
-            border-radius: 2rem;
-            margin: 0.25rem;
-        }
-
-        #input:focus {
-            outline: none;
-        }
-
-        #form>button {
-            background: #333;
-            border: none;
-            padding: 0 1rem;
-            margin: 0.25rem;
-            border-radius: 3px;
-            outline: none;
-            color: #fff;
-        }
-
-        #messages {
-            list-style-type: none;
-            margin: 0;
-            padding: 0;
-        }
-
-        #messages>li {
-            padding: 0.5rem 1rem;
-            color: rgb(39, 100, 160);
-        }
-
-        #messages>li:nth-child(odd) {
-            background: linear-gradient(90deg, rgba(0, 0, 0, 0.7) 0%, rgba(18, 15, 1, 0.6) 22%, rgba(121, 101, 9, 0.8) 72%, rgba(255, 170, 0, 0.9) 100%);
-        }
-    </style>
+    <title>Chat</title>
 </head>
-
 <body>
     <div class="join-screen">
-        <h1 class="">Добро пожаловать в чат!<br>Введите ваше имя...</h1>
+        <h1 class="">WELCOME TO THE CHAT!<br>Your name...</h1>
         <br>
-        <input id="username" type="text" required placeholder="Ваше Имя...">
+        <input id="username" type="text" required placeholder="name...">
         <button id="join-chat-btn">Join</button>
     </div>
-    <div class="cnopka">
-        <a href="#" class="menu">Главная</a>
-        <a href="#" class="menu">Рабочая</a>
-        <a href="#" class="menu">Сторона</a>
-        <a href="#" class="menu">Солнца?</a>
-        <a href="index1.html">
-            <button class="button">
-                Вход/регистрация
+    <div class="container blur-element">
+        <div class="header">
+            <div class="logo">
+                <img src="img/logo.png" alt="logo">
+                <div class="logoname">Chat</div>
+            </div>
+            <ul>
+                <li><a href="#">Главная</a></li>
+                <li><a href="#">Обновления</a></li>
+                <li><a href="#">О разработчике</a></li>
+                <li><button id="logout">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-login" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round" style="display: block">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                            <path d="M14 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2"></path>
+                            <path d="M20 12h-13l3 -3m0 6l-3 -3"></path>
+                         </svg>
+                    </button>
+                </li>
+            </ul>
+        </div>
+        <div class="chat-box"></div>
+        <div class="chat_input-box">
+            <button id="attachments-btn" class="chat-btn aligncenter">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-paperclip" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                    <path d="M15 7l-6.5 6.5a1.5 1.5 0 0 0 3 3l6.5 -6.5a3 3 0 0 0 -6 -6l-6.5 6.5a4.5 4.5 0 0 0 9 9l6.5 -6.5"></path>
+                 </svg>
             </button>
-        </a>
+            <textarea id="message-input" placeholder="Напишите сообщение..."></textarea>
+            <div id="smile-btn" class="chat-btn aligncenter">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-mood-smile" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                    <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"></path>
+                    <path d="M9 10l.01 0"></path>
+                    <path d="M15 10l.01 0"></path>
+                    <path d="M9.5 15a3.5 3.5 0 0 0 5 0"></path>
+                 </svg>
+            </div>
+            <button id="send-btn" class="chat-btn aligncenter">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-telegram" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                    <path d="M15 10l-4 4l6 6l4 -16l-18 7l4 2l2 6l3 -4"></path>
+                 </svg>
+            </button>
+        </div>
     </div>
-    <ul id="messages"></ul>
-    <form id="form" action="">
-        <input id="input" placeholder="Введите сообщение..." autocomplete="off" /><button>Отправить</button>
-    </form>
-
-    <script src="/socket.io/socket.io.js"></script>
+    <script type="text/javascript" src="socket.io/socket.io.js"></script>
     <script type="text/javascript" src="main.js"></script>
-
-    <script>
-        var socket = io();
-
-        var messages = document.getElementById('messages');
-        var form = document.getElementById('form');
-        var input = document.getElementById('input');
-
-        form.addEventListener('submit', function (e) {
-            e.preventDefault();
-            if (input.value != "") {
-                socket.emit('messageFromClient', input.value);
-                input.value = '';
-            }
-        });
-
-        socket.on('messageFromServer', function (msg) {
-            var item = document.createElement('li');
-            item.textContent = msg;
-            messages.appendChild(item);
-            window.scrollTo(0, document.body.scrollHeight);
-        });
-    </script>
 </body>
-
 </html>

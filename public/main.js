@@ -121,4 +121,4 @@
         messageContainer.scrollTop = messageContainer.scrollHeight - messageContainer.clientHeight;
     }
 
-});
+})();
